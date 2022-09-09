@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.check_face, name='check_face'),
     path('check-face/image/', views.check_face_image, name='check_face'),
+    path('check-image/', views.check_image, name='check_image'),
 ]
