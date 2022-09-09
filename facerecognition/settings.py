@@ -118,7 +118,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ["https://d6be-213-230-96-152.ngrok.io"]
+CSRF_TRUSTED_ORIGINS = ["https://d6be-213-230-96-152.ngrok.io", "test.argos.uz"]
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
