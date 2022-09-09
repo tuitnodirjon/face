@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta content="stuff, to, help, search, engines, not" name="keywords">
+  <meta content="What this page is about." name="description">
+  <meta content="Display Webcam Stream" name="title">
+  <title>Display Webcam Stream</title>
+
+  <style>
+    #container {
+      margin: 0px auto;
+      width: 500px;
+      height: 375px;
+      border: 10px #333 solid;
+    }
+
+    #videoElement {
+      width: 500px;
+      height: 375px;
+      background-color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <video autoplay="true" id="videoElement">
+
+    </video>
+  </div>
+  <button id="click-photo">Face Recognition</button>
+  <canvas id="canvas" width="320" height="240"></canvas>
+  <div id="person_name">
+
+  </div>
+  <script>
+    var csrftoken = '{{ csrf_token }}';
+  </script>
+  <script>
+    var video = document.querySelector("#videoElement");
+    let click_button = document.querySelector("#click-photo");
+    let canvas = document.querySelector("#canvas");
+    let context = canvas.getContext("2d");
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({
+          video: true
+        })
+        .then(function(stream) {
+          video.srcObject = stream;
+          // myJson = JSON.stringify(stream)
+
+        })
+        .catch(function(err0r) {
+          console.log("Something went wrong!");
+        });
+    }
+    click_button.addEventListener('click', function() {
+          canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+          let image_data_url = canvas.toDataURL('image/jpeg');
+          let image_url = image_data_url.replace(/^data:image\/png/,'data:application/octet-stream');
+    url="/check-face/image/"
+    fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+          'image': image_data_url,
+          'url': image_url
+        })
+      })
+        .then((response) => {
+          response.json().then((data) => {
+            console.log(data)
+            document.getElementById("person_name").innerHTML = `<h3>${data['name']}</h3>`;
+          })
+        })
+
+    });
+
+
+  </script>
+</body>
+
+</html>
