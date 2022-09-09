@@ -1,8 +1,8 @@
 import json
 
-import cv2
+
 import face_recognition
-import numpy as np
+
 import os
 from face_recognition import compare_faces
 from django.http import JsonResponse

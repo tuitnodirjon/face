@@ -30,7 +30,9 @@
 
     </video>
   </div>
+  <div id="nodirjon">
   <button id="click-photo">Face Recognition</button>
+    </div>
   <canvas id="canvas" width="320" height="240"></canvas>
   <div id="person_name">
 
@@ -59,6 +61,7 @@
     click_button.addEventListener('click', function() {
           canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
           let image_data_url = canvas.toDataURL('image/jpeg');
+          document.getElementById("nodirjon").innerHTML = `Processing...`;
           let image_url = image_data_url.replace(/^data:image\/png/,'data:application/octet-stream');
     url="/check-face/image/"
     fetch(url, {
@@ -79,6 +82,7 @@
             document.getElementById("person_name").innerHTML = `<h3>${data['name']}</h3>`;
           })
         })
+      document.getElementById("nodirjon").innerHTML = `<button id="click-photo">Face Recognition</button>`;
 
     });
 
