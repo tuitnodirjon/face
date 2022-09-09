@@ -30,8 +30,8 @@
 
     </video>
   </div>
-  <div id="nodirjon">
-  <button id="click-photo">Face Recognition</button>
+  <div id="nodirjonbutton">
+  <button onclick="buttonOnClick()" id="click-photo">Face Recognition</button>
     </div>
   <canvas id="canvas" width="320" height="240"></canvas>
   <div id="person_name">
@@ -58,10 +58,10 @@
           console.log("Something went wrong!");
         });
     }
-    click_button.addEventListener('click', function() {
+    function buttonOnClick() {
           canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
           let image_data_url = canvas.toDataURL('image/jpeg');
-          document.getElementById("nodirjon").innerHTML = `Processing...`;
+          document.getElementById("nodirjonbutton").innerHTML = `<p>Processing...</p>`;
           let image_url = image_data_url.replace(/^data:image\/png/,'data:application/octet-stream');
     url="/check-face/image/"
     fetch(url, {
@@ -80,11 +80,12 @@
           response.json().then((data) => {
             console.log(data)
             document.getElementById("person_name").innerHTML = `<h3>${data['name']}</h3>`;
+            document.getElementById("nodirjonbutton").innerHTML = `<button onclick="buttonOnClick()" id="click-photo">Face Recognition</button>`;
           })
         })
-      document.getElementById("nodirjon").innerHTML = `<button id="click-photo">Face Recognition</button>`;
 
-    });
+
+    };
 
 
   </script>
