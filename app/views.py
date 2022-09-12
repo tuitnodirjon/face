@@ -13,7 +13,7 @@ from rest_framework.response import Response
 def check_image(request):
     if request.method == 'POST':
         # print(json.loads(request.body))
-        data = json.loads(request.body)
+        data = request.data
         face_img_data = data['face_image']
         base_img_data = data['base_image']
         import base64
