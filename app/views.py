@@ -20,14 +20,14 @@ def check_image(request):
         import random
         face_image_name = f"image_{random.randint(1, 10000)}"
         base_image_name = f"image_{random.randint(10001, 100000)}"
-        face_decodeit = open(f'./images/{face_image_name}.jpg', 'wb')
+        face_decodeit = open(f'{face_image_name}.jpg', 'wb')
         face_decodeit.write(base64.b64decode(face_img_data.split(',')[-1]))
         face_decodeit.close()
         base_decodeit = open(f'{base_image_name}.jpg', 'wb')
         base_decodeit.write(base64.b64decode(base_img_data.split(',')[-1]))
         base_decodeit.close()
-        face_image = face_recognition.load_image_file(f'./images/{face_image_name}.jpg')
-        base_image = face_recognition.load_image_file(f'./images/{base_image_name}.jpg')
+        face_image = face_recognition.load_image_file(f'{face_image_name}.jpg')
+        base_image = face_recognition.load_image_file(f'{base_image_name}.jpg')
         face_encoding = face_recognition.face_encodings(face_image)[0]
         base_encoding = face_recognition.face_encodings(base_image)[0]
         results = compare_faces([base_encoding], face_encoding)
