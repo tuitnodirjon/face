@@ -27,9 +27,12 @@ def check_image(request):
         base_decodeit.close()
         face_image = face_recognition.load_image_file(f'{face_image_name}.jpg')
         base_image = face_recognition.load_image_file(f'{base_image_name}.jpg')
-        face_encoding = face_recognition.face_encodings(face_image)[0]
-        base_encoding = face_recognition.face_encodings(base_image)[0]
-        results = compare_faces([base_encoding], face_encoding)
+        try:
+            face_encoding = face_recognition.face_encodings(face_image)[0]
+            base_encoding = face_recognition.face_encodings(base_image)[0]
+            results = compare_faces([base_encoding], face_encoding)
+        except:
+            return Response({'result': False})
         if True in results:
             return Response(json.dumps({'result': True}))
         return Response(json.dumps({'result': False}))
