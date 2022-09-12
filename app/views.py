@@ -12,7 +12,6 @@ from rest_framework.response import Response
 @api_view(['POST'])
 def check_image(request):
     if request.method == 'POST':
-        # print(json.loads(request.body))
         data = request.data
         face_img_data = data['face_image']
         base_img_data = data['base_image']
@@ -32,8 +31,8 @@ def check_image(request):
         base_encoding = face_recognition.face_encodings(base_image)[0]
         results = compare_faces([base_encoding], face_encoding)
         if True in results:
-            return Response({'result': True})
-        return Response({'result': False})
+            return Response(json.dumps({'result': True}))
+        return Response(json.dumps({'result': False}))
 
 
 def check_face(request):
